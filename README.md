@@ -1,6 +1,6 @@
 # compiler.portfolio
 
-A compiler-themed portfolio website built with **React** + **Rails API**.
+A compiler-themed portfolio website built with **React**
 
 ## 🎨 Design Concept
 
@@ -28,11 +28,6 @@ portfolio/
 │   │   ├── App.jsx    # Main portfolio components
 │   │   └── App.css    # Compiler-themed styles
 │   └── ...
-├── backend/           # Rails API
-│   ├── app/
-│   │   └── controllers/api/v1/
-│   │       └── portfolio_controller.rb
-│   └── ...
 └── README.md
 ```
 
@@ -40,17 +35,6 @@ portfolio/
 
 ### Prerequisites
 - Node.js 18+
-- Ruby 3.2+
-- Rails 8.0+
-
-### Backend Setup
-
-```bash
-cd backend
-bundle install
-rails db:setup
-rails server -p 3000
-```
 
 ### Frontend Setup
 
@@ -60,24 +44,10 @@ npm install
 npm run dev
 ```
 
-The frontend runs at `http://localhost:5173` and the API at `http://localhost:3000`.
+The frontend runs at `http://localhost:5173`
 
 ## 🔧 Configuration
 
-### Personalizing Your Portfolio
-
-1. **Update profile info** in `backend/app/controllers/api/v1/portfolio_controller.rb`
-2. **Customize styles** in `frontend/src/App.css` (CSS variables at the top)
-3. **Modify content** in `frontend/src/App.jsx` (components for each phase)
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/v1/profile` | Basic profile info |
-| GET | `/api/v1/experiences` | Work experience |
-| GET | `/api/v1/projects` | Project showcase |
-| POST | `/api/v1/contact` | Contact form submission |
 
 ## 🎯 Features
 
