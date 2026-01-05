@@ -92,6 +92,13 @@ body {
   font-weight: 500;
 }
 
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
 .brand-symbol {
   font-size: 1.5rem;
   color: var(--syntax-keyword);
@@ -274,6 +281,7 @@ body {
   padding: var(--section-padding) 80px;
   max-width: 1200px;
   margin: 0 auto;
+  scroll-margin-top: var(--nav-height);
 }
 
 .phase-header {
@@ -324,7 +332,7 @@ body {
   gap: 48px;
 }
 
-#lexer .phase-content {
+#about .phase-content {
   grid-template-columns: 1fr 1fr;
   align-items: start;
 }
@@ -421,62 +429,59 @@ body {
 }
 
 /* =========================================
-   PARSER SECTION
+   PARSER SECTION - Experience
    ========================================= */
 
 .experience-tree {
   display: flex;
   flex-direction: column;
   gap: 0;
+  overflow: hidden;
 }
 
-.tree-node {
+.exp-tree-node {
   display: flex;
   gap: 24px;
   padding: 32px 0;
 }
 
-.node-connector {
+.exp-node-connector {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 20px;
+  flex-shrink: 0;
 }
 
-.connector-dot {
+.exp-connector-dot {
   width: 12px;
   height: 12px;
   background: var(--accent);
   border-radius: 50%;
   flex-shrink: 0;
+  transition: var(--transition-fast);
 }
 
-.connector-line {
+.exp-connector-line {
   width: 2px;
   flex: 1;
   background: var(--bg-tertiary);
   margin-top: 8px;
 }
 
-.tree-node:last-child .connector-line {
+.exp-tree-node:last-child .exp-connector-line {
   display: none;
 }
 
-.node-content {
+.exp-node-content {
   flex: 1;
   background: var(--bg-secondary);
   padding: 28px;
   border-radius: 12px;
   border: 1px solid var(--bg-tertiary);
-  transition: var(--transition-fast);
 }
 
-.node-content:hover {
-  border-color: var(--bg-elevated);
-  transform: translateX(4px);
-}
-
-.node-header {
+.exp-node-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -488,21 +493,21 @@ body {
   color: var(--text-muted);
 }
 
-.node-role {
+.exp-node-role {
   font-size: 1.25rem;
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 20px;
 }
 
-.node-highlights {
+.exp-node-highlights {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.node-highlights li {
+.exp-node-highlights li {
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -517,110 +522,322 @@ body {
 }
 
 /* =========================================
-   AST SECTION
+   AST SECTION - Tree Visualization
    ========================================= */
 
-.ast-nodes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 24px;
-}
-
-.ast-node {
-  display: block;
-  background: var(--bg-secondary);
-  border: 1px solid var(--bg-tertiary);
-  border-radius: 12px;
-  padding: 28px;
-  text-decoration: none;
-  transition: var(--transition-fast);
-  position: relative;
-  overflow: hidden;
-}
-
-.ast-node::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--syntax-keyword), var(--syntax-function));
-  opacity: 0;
-  transition: var(--transition-fast);
-}
-
-.ast-node:hover {
-  border-color: var(--bg-elevated);
-  transform: translateY(-4px);
-}
-
-.ast-node:hover::before {
-  opacity: 1;
-}
-
-.node-type {
-  font-size: 0.8rem;
-  color: var(--syntax-type);
-  margin-bottom: 20px;
-  display: inline-block;
-  padding: 4px 12px;
-  background: rgba(255, 203, 107, 0.1);
-  border-radius: 4px;
-}
-
-.node-fields {
+/* Optimization Controls */
+.ast-controls {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
+  padding: 20px 24px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--bg-tertiary);
 }
 
-.field {
+.opt-label {
+  font-size: 1rem;
+}
+
+.opt-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.opt-btn {
+  padding: 8px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.opt-btn:hover:not(.disabled) {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.opt-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.opt-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Optimization Status */
+.optimization-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  animation: pulse-border 1s infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: var(--accent); }
+  50% { border-color: var(--syntax-keyword); }
+}
+
+.status-icon {
+  font-size: 1.1rem;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.status-text {
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
-.field-name {
-  color: var(--syntax-param);
-  margin-right: 8px;
-}
-
-.field.tags .array {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tag {
-  font-size: 0.8rem;
-  color: var(--syntax-string);
-}
-
-.tag::after {
-  content: ',';
-  color: var(--text-muted);
-}
-
-.tag:last-child::after {
-  display: none;
-}
-
-.node-link {
-  font-size: 0.85rem;
+.pass-name {
   color: var(--syntax-function);
-  opacity: 0;
+  font-weight: 500;
+}
+
+/* AST Tree Container */
+.ast-tree {
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 32px;
+  overflow-x: auto;
+  transition: var(--transition-base);
+}
+
+.ast-tree.optimizing {
+  opacity: 0.7;
+}
+
+/* Tree Node Structure */
+.tree-node-container {
+  position: relative;
+  padding: 8px 0;
+}
+
+.tree-branch {
+  position: absolute;
+  left: -24px;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+}
+
+.branch-horizontal {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--bg-elevated);
+}
+
+.branch-vertical {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--bg-elevated);
+}
+
+.branch-vertical.last {
+  height: 30px;
+}
+
+.tree-children {
+  margin-top: 4px;
+}
+
+/* AST Tree Node */
+.ast-tree-node {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 8px;
+  min-width: 200px;
   transition: var(--transition-fast);
 }
 
-.ast-node:hover .node-link {
+.ast-tree-node:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.ast-tree-node.optimized {
+  border-left: 3px solid var(--syntax-string);
+}
+
+.ast-tree-node.ProgramNode {
+  border-left: 3px solid var(--syntax-keyword);
+}
+
+.ast-tree-node.DeclNode,
+.ast-tree-node.OptimizedNode,
+.ast-tree-node.InlinedNode {
+  border-left: 3px solid var(--syntax-function);
+}
+
+.ast-tree-node.ProjectNode,
+.ast-tree-node.DataNode {
+  border-left: 3px solid var(--syntax-type);
+}
+
+.ast-tree-node.FieldNode {
+  border-left: 3px solid var(--syntax-string);
+}
+
+/* Node Badge */
+.node-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.node-kind {
+  font-size: 0.85rem;
+  color: var(--syntax-type);
+  font-weight: 500;
+}
+
+.node-type-annotation {
+  font-size: 0.8rem;
+  color: var(--syntax-keyword);
+}
+
+/* Node Value */
+.node-value {
+  font-size: 0.85rem;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.value-label {
+  color: var(--syntax-param);
+}
+
+/* Node Attributes */
+.node-attrs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.attr-tag {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  background: rgba(130, 170, 255, 0.1);
+  color: var(--syntax-function);
+  border-radius: 4px;
+}
+
+/* Node Description */
+.node-desc {
+  font-size: 0.8rem;
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.node-desc .comment {
+  color: var(--text-secondary);
+}
+
+/* Node Details */
+.node-details {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.node-details li {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.node-details .bullet {
+  color: var(--syntax-punct);
+  flex-shrink: 0;
+}
+
+/* Node Link */
+.node-link-btn {
+  font-size: 0.8rem;
+  color: var(--syntax-punct);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: var(--transition-fast);
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.node-link-btn:hover {
   opacity: 1;
+  color: var(--syntax-function);
+}
+
+/* Optimization Summary */
+.opt-summary {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--bg-tertiary);
+}
+
+.opt-summary .comment {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.passes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pass-badge {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  background: rgba(199, 146, 234, 0.15);
+  color: var(--syntax-keyword);
+  border-radius: 4px;
+  border: 1px solid rgba(199, 146, 234, 0.3);
 }
 
 /* =========================================
    CODEGEN SECTION
    ========================================= */
 
-#codegen .phase-content {
+#contact .phase-content {
   max-width: 700px;
 }
 
@@ -643,6 +860,7 @@ body {
   font-size: 0.95rem;
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
 .opcode {
@@ -652,6 +870,16 @@ body {
 
 .operand {
   color: var(--syntax-param);
+}
+
+.instruction .link {
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.instruction .link:hover {
+  color: var(--syntax-function);
+  text-decoration: underline;
 }
 
 /* Contact Form */
@@ -777,7 +1005,7 @@ body {
     font-size: 2.25rem;
   }
 
-  #lexer .phase-content {
+  #about .phase-content {
     grid-template-columns: 1fr;
   }
 

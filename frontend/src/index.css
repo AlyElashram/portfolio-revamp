@@ -1,1 +1,4 @@
-/* Base reset - additional resets handled in App.css */
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
