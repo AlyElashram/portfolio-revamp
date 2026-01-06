@@ -986,6 +986,11 @@ body {
   font-size: 1rem;
 }
 
+.footer-text {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
 /* =========================================
    RESPONSIVE
    ========================================= */
@@ -1043,5 +1048,278 @@ body {
     flex-direction: column;
     gap: 24px;
     text-align: center;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================
+   MODE TOGGLE BUTTON
+   ========================================= */
+
+.nav-mode-toggle {
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 1px solid var(--bg-tertiary);
+}
+
+.mode-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.mode-toggle-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  transform: scale(1.02);
+}
+
+.mode-toggle-btn.geek {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: var(--accent);
+  color: var(--syntax-keyword);
+}
+
+.mode-toggle-btn.normal {
+  background: rgba(130, 170, 255, 0.15);
+  border-color: var(--syntax-function);
+  color: var(--syntax-function);
+}
+
+.toggle-icon {
+  font-size: 1rem;
+}
+
+.toggle-label {
+  font-weight: 500;
+}
+
+/* =========================================
+   NORMAL MODE STYLES
+   ========================================= */
+
+.normal-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hero-title.normal-mode {
+  font-family: var(--font-sans);
+}
+
+.hero-title.normal-mode .line {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.highlight-name {
+  color: var(--syntax-function);
+  font-weight: 600;
+}
+
+/* Normal Intro Text */
+.intro-text.normal-intro {
+  border-left: 3px solid var(--accent);
+}
+
+.intro-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.intro-body {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.intro-body strong {
+  color: var(--syntax-function);
+}
+
+/* Company name in normal mode */
+.company-name {
+  color: var(--syntax-function);
+  font-weight: 500;
+}
+
+/* =========================================
+   PROJECT CARDS GRID (Normal Mode)
+   ========================================= */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-fast);
+  height: 100%;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.project-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-family: var(--font-sans);
+}
+
+.project-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--bg-tertiary);
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-tag {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  background: rgba(130, 170, 255, 0.1);
+  color: var(--syntax-function);
+  border-radius: 4px;
+}
+
+.project-github-link {
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.project-github-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+/* =========================================
+   CONTACT LINKS (Normal Mode)
+   ========================================= */
+
+.contact-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.contact-link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.contact-link-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  background: var(--bg-tertiary);
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+  color: var(--syntax-function);
+}
+
+.contact-icon svg {
+  color: var(--syntax-function);
+}
+
+.contact-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.contact-value {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  word-break: break-all;
+}
+
+/* =========================================
+   RESPONSIVE - Normal Mode
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-mode-toggle {
+    margin-left: 8px;
+    padding-left: 8px;
+  }
+
+  .toggle-label {
+    display: none;
+  }
+
+  .mode-toggle-btn {
+    padding: 8px 12px;
   }
 }

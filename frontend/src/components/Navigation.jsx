@@ -1,14 +1,25 @@
 import { useState, useEffect } from 'react'
+import { useMode } from '../context/ModeContext'
 
-const sections = [
+const geekSections = [
   { id: 'about', label: 'lexer', number: '01' },
   { id: 'experience', label: 'parser', number: '02' },
   { id: 'projects', label: 'ast', number: '03' },
   { id: 'contact', label: 'codegen', number: '04' },
 ]
 
+const normalSections = [
+  { id: 'about', label: 'about', number: '01' },
+  { id: 'experience', label: 'experience', number: '02' },
+  { id: 'projects', label: 'projects', number: '03' },
+  { id: 'contact', label: 'contact', number: '04' },
+]
+
 function Navigation() {
   const [activeSection, setActiveSection] = useState('')
+  const { isGeekMode, toggleMode } = useMode()
+  
+  const sections = isGeekMode ? geekSections : normalSections
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,14 +38,14 @@ function Navigation() {
     window.addEventListener('scroll', handleScroll)
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [sections])
 
   return (
     <nav className="nav">
       <div className="nav-brand">
         <a href="#" className="brand-link">
-          <span className="brand-symbol">λ</span>
-          <span className="brand-text">compiler.portfolio</span>
+          <span className="brand-symbol">{isGeekMode ? 'λ' : '⟨/⟩'}</span>
+          <span className="brand-text">{isGeekMode ? 'compiler.portfolio' : 'aly.elashram'}</span>
         </a>
       </div>
       <ul className="nav-links">
@@ -49,6 +60,16 @@ function Navigation() {
             </a>
           </li>
         ))}
+        <li className="nav-mode-toggle">
+          <button 
+            onClick={toggleMode}
+            className={`mode-toggle-btn ${isGeekMode ? 'geek' : 'normal'}`}
+            title={isGeekMode ? 'Switch to HR-friendly mode' : 'Switch to Geek mode'}
+          >
+            <span className="toggle-icon">{isGeekMode ? '🤓' : '👔'}</span>
+            <span className="toggle-label">{isGeekMode ? 'Geek' : 'Pro'}</span>
+          </button>
+        </li>
       </ul>
     </nav>
   )
